@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Cars.Core;
 
 namespace Cars.Data
 {
@@ -9,15 +10,9 @@ namespace Cars.Data
         }
 
         public DbSet<Car> Cars { get; set; }
-    }
-
-    public class Car
-    {
-        public int Id { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Car>().ToTable("Car");
+        }
     }
 }
