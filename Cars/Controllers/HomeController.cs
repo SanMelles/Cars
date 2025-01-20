@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Cars.Models;
 using Microsoft.AspNetCore.Mvc;
+using Cars.Models;
 
 namespace Cars.Controllers
 {

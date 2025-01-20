@@ -1,4 +1,6 @@
-namespace Cars.Core.Models
+using Microsoft.EntityFrameworkCore;
+
+namespace Cars.Models
 {
     public class ErrorViewModel
     {
