@@ -1,11 +1,7 @@
-using Cars.Data; // Add this using directive
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Cars.Core.ServiceInterface; // Add this using directive
+using Cars.ApplicationService.Services; // Add this using directive 
+using Cars.Data; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CarsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Register CarsContext
+builder.Services.AddScoped<ICarServices, CarServices>(); // Register CarRepository
 
 var app = builder.Build();
 

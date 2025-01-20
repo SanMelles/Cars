@@ -20,7 +20,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
   </ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\ApplicationServices\Cars.ApplicationServices.csproj" />
 		<ProjectReference Include="..\Core\Cars.Core.csproj" />
 	</ItemGroup>
 

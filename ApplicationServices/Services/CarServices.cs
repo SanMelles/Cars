@@ -1,14 +1,15 @@
-﻿using Cars.Core.Interfaces;
+﻿using Cars.Core.ServiceInterface;
 using Cars.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Cars.Data;
 
-namespace Cars.Data
+namespace Cars.ApplicationService.Services
 {
-    public class CarRepository : ICarRepository
+    public class CarServices : ICarServices
     {
         private readonly CarsContext _context;
 
-        public CarRepository(CarsContext context)
+        public CarServices(CarsContext context)
         {
             _context = context;
         }

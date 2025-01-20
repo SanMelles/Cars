@@ -3,17 +3,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Cars.Core.Models;
 
-namespace Cars.Core.Interfaces
+namespace Cars.Core.ServiceInterface
 {
-    public class ICarService
+    public interface ICarServices
     {
-        public interface ICarServices
-        {
-            Task<IEnumerable<Car>> GetAllCarsAsync();
-            Task<Car> GetCarByIdAsync(int id);
-            Task<Car> AddCarAsync(Car car);
-            Task<Car> UpdateCarAsync(Car car);
-            Task<Car> DeleteCarAsync(int id);
-        }   
-    }
+        Task<IEnumerable<Car>> GetAllCarsAsync();
+        Task<Car> GetCarByIdAsync(int id);
+        Task<Car> AddCarAsync(Car car);
+        Task<Car> UpdateCarAsync(Car car);
+        Task<bool> DeleteCarAsync(int id);
+    }   
 }
