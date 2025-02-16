@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cars.Core.Models.Cars
+namespace Cars.Core.Dto
 {
-    public class CarDetailsViewModel
+    public class CarDto
     {
         public int Id { get; set; }
         [Required]

@@ -24,11 +24,21 @@ namespace Cars.ApplicationService.Services
             return await _context.Cars.FindAsync(id);
         }
 
-        public async Task<CarIndexViewModel> AddCarAsync(CarIndexViewModel car)
+        public async Task<CarIndexViewModel> AddCarAsync(CarDto dto)
         {
+            var car = new Car
+            {
+                Id = dto.Id,
+                Brand = dto.Brand,
+                Model = dto.Model,
+                Year = dto.Year,
+                EnginePower = dto.EnginePower,
+                CreatedAt = dto.CreatedAt,
+                ModifiedAt = dto.ModifiedAt
+            };
+
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
-            return car;
         }
 
         public async Task<CarIndexViewModel> UpdateCarAsync(CarIndexViewModel car)

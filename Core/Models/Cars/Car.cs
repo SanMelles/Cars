@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cars.Core.Models.Cars
 {
-    public class CarDetailsViewModel
+    public class Car
     {
         public int Id { get; set; }
         [Required]

@@ -5,6 +5,7 @@ using Cars.Core.ServiceInterface;
 using Cars.Data;
 using Cars.Models;
 using Microsoft.IdentityModel.Tokens;
+using Cars.Core.Dto;
 
 namespace Cars.Controllers
 {
@@ -43,6 +44,11 @@ namespace Cars.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CarCreateUpdateViewModel vm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateUpdate", vm);
+            }
+
             var dto = new CarDto()
             {
                 Id = vm.Id,
@@ -54,20 +60,20 @@ namespace Cars.Controllers
                 ModifiedAt = vm.ModifiedAt
             };
 
-            var result = await _carService.Create(dto);
+            var result = await _carService.AddCarAsync(dto);
 
             if (result == null)
             {
-                return RedirectToAction(nameof(Index));
+                return View(vm);
             }
 
-            return RedirectToAction(nameof(Index), vm);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(int id)
         {
-            var car = await _carService.DetailAsync(id);
+            var car = await _carService.DetailsAsync(id);
 
             if (car == null)
             {
@@ -89,9 +95,9 @@ namespace Cars.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
+        public async Task<IActionResult> Update(int id)
         {
-            var car = await _carService.DetailAsync(id);
+            var car = await _carService.DetailsAsync(id);
 
             if (car == null)
             {
@@ -113,33 +119,38 @@ namespace Cars.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CarCreateUpdateViewModel vm)
+        public async Task<IActionResult> Update(CarIndexViewModel vm)
         {
-            var dto = new CarDto()
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var dto = new CarDto
             {
                 Id = vm.Id,
-                Brand = vm.Brand,
+                Name = vm.Name,
                 Model = vm.Model,
-                Year = vm.Year,
-                EnginePower = vm.EnginePower,
-                CreatedAt = vm.CreatedAt,
-                ModifiedAt = vm.ModifiedAt
+                Type = vm.Type,
+                Seats = vm.Seats,
+                EnginePower = vm.EnginePower
             };
 
-            var result = await _carService.Update(dto);
+            var result = await _carService.UpdateCarAsync(dto);
 
             if (result == null)
             {
-                return RedirectToAction(nameof(Index));
+                return View(vm);
             }
 
-            return RedirectToAction(nameof(Index), vm);
+            return RedirectToAction(nameof(Index));
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var car = await _carService.DetailAsync(id);
+            var car = await _carService.DetailsAsync(id);
 
             if (car == null)
             {
@@ -161,9 +172,9 @@ namespace Cars.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        public async Task<IActionResult> DeleteConfirmation(int id)
         {
-            var car = await _carService.Delete(id);
+            var car = await _carService.DeleteCarAsync(id);
 
             if (car == null)
             {
