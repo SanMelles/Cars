@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Cars.Core.Models;
+using Cars.Core.Models.Cars;
 
 namespace Cars.Data
 {
@@ -9,7 +9,7 @@ namespace Cars.Data
         {
         }
 
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<CarIndexViewModel> Cars { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

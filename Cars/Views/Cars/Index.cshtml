@@ -1,23 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Car List";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Kui kasutad layouti
-}
+﻿@model IEnumerable<Car>
 
 <h1>Car List</h1>
 
-<table id="carTable">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>Make</th>
+            <th>#</th>
+            <th>Brand</th>
             <th>Model</th>
             <th>Year</th>
         </tr>
     </thead>
     <tbody>
-        @* Siin saab Razoriga dünaamiliselt autod lisada *@
+        @foreach (var car in Model)
+        {
+            <tr>
+                <td>@car.Id</td>
+                <td>@car.Brand</td>
+                <td>@car.Model</td>
+                <td>@car.Year</td>
+            </tr>
+        }
     </tbody>
 </table>
-
-@section Scripts {
-    <script src="~/js/script.js"></script>
-}

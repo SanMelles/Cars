@@ -1,7 +1,7 @@
 ﻿using Cars.Core.ServiceInterface;
-using Cars.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Cars.Data;
+using Cars.Core.Models.Cars;
 
 namespace Cars.ApplicationService.Services
 {
@@ -14,24 +14,24 @@ namespace Cars.ApplicationService.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Car>> GetAllCarsAsync()
+        public async Task<IEnumerable<CarIndexViewModel>> GetAllCarsAsync()
         {
             return await _context.Cars.ToListAsync();
         }
 
-        public async Task<Car> GetCarByIdAsync(int id)
+        public async Task<CarIndexViewModel> GetCarByIdAsync(int id)
         {
             return await _context.Cars.FindAsync(id);
         }
 
-        public async Task<Car> AddCarAsync(Car car)
+        public async Task<CarIndexViewModel> AddCarAsync(CarIndexViewModel car)
         {
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
             return car;
         }
 
-        public async Task<Car> UpdateCarAsync(Car car)
+        public async Task<CarIndexViewModel> UpdateCarAsync(CarIndexViewModel car)
         {
             _context.Entry(car).State = EntityState.Modified;
             await _context.SaveChangesAsync();
