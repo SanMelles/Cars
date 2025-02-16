@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cars.Data.Migrations
 {
-    [DbContext(typeof(CarsContext))]
-    [Migration("20250120204419_InitialCreate")]
+    [DbContext(typeof(CarsDbContext))]
+    [Migration("20250216115222_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Cars.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cars.Core.Car", b =>
+            modelBuilder.Entity("Cars.Core.Models.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace Cars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Cars");
                 });
 #pragma warning restore 612, 618
         }

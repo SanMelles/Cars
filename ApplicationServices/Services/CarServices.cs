@@ -7,9 +7,9 @@ namespace Cars.ApplicationService.Services
 {
     public class CarServices : ICarServices
     {
-        private readonly CarsContext _context;
+        private readonly CarsDbContext _context;
 
-        public CarServices(CarsContext context)
+        public CarServices(CarsDbContext context)
         {
             _context = context;
         }

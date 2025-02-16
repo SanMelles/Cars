@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cars.Data.Migrations
 {
-    [DbContext(typeof(CarsContext))]
-    partial class CarsContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CarsDbContext))]
+    partial class CarsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace Cars.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cars.Core.Car", b =>
+            modelBuilder.Entity("Cars.Core.Models.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Cars.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Cars");
                 });
 #pragma warning restore 612, 618
         }

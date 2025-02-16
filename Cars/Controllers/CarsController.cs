@@ -6,7 +6,7 @@ namespace Cars.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CarsController : ControllerBase
+    public class CarsController : Controller
     {
         private readonly ICarServices _carService;
 

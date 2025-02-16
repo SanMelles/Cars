@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<CarsContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Register CarsContext
+builder.Services.AddDbContext<CarsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Register CarsDbContext
 builder.Services.AddScoped<ICarServices, CarServices>(); // Register CarRepository
 
 var app = builder.Build();
