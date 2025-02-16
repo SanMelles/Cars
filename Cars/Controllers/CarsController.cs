@@ -80,7 +80,7 @@ namespace Cars.Controllers
                 return View("Error");
             }
 
-            var vm = new CarDetailsViewModel
+            var vm = new CarDto
             {
                 Id = car.Id,
                 Brand = car.Brand,
@@ -129,11 +129,12 @@ namespace Cars.Controllers
             var dto = new CarDto
             {
                 Id = vm.Id,
-                Name = vm.Name,
+                Brand = vm.Brand,
                 Model = vm.Model,
-                Type = vm.Type,
-                Seats = vm.Seats,
-                EnginePower = vm.EnginePower
+                Year = vm.Year,
+                EnginePower = vm.EnginePower,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt
             };
 
             var result = await _carService.UpdateCarAsync(dto);

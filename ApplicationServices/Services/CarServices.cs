@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Cars.Data;
 using Cars.Core.Models.Cars;
+using Cars.Core.Dto;
+
 
 namespace Cars.ApplicationService.Services
 {
@@ -26,7 +28,7 @@ namespace Cars.ApplicationService.Services
 
         public async Task<CarIndexViewModel> AddCarAsync(CarDto dto)
         {
-            var car = new Car
+            var car = new CarIndexViewModel
             {
                 Id = dto.Id,
                 Brand = dto.Brand,
@@ -39,13 +41,46 @@ namespace Cars.ApplicationService.Services
 
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
+
+            var carViewModel = new CarIndexViewModel
+            {
+                Id = car.Id,
+                Brand = car.Brand,
+                Model = car.Model,
+                Year = car.Year,
+                EnginePower = car.EnginePower
+            };
+
+            return carViewModel;
         }
 
-        public async Task<CarIndexViewModel> UpdateCarAsync(CarIndexViewModel car)
+        public async Task<CarIndexViewModel> UpdateCarAsync(CarDto dto)
         {
-            _context.Entry(car).State = EntityState.Modified;
+            var car = await _context.Cars.FindAsync(dto.Id);
+            if (car == null)
+            {
+                return null;
+            }
+
+            car.Brand = dto.Brand;
+            car.Model = dto.Model;
+            car.Year = dto.Year;
+            car.EnginePower = dto.EnginePower;
+            car.ModifiedAt = DateTime.UtcNow;
+
+            _context.Cars.Update(car);
             await _context.SaveChangesAsync();
-            return car;
+
+            var carViewModel = new CarIndexViewModel
+            {
+                Id = car.Id,
+                Brand = car.Brand,
+                Model = car.Model,
+                Year = car.Year,
+                EnginePower = car.EnginePower
+            };
+
+            return carViewModel;
         }
 
         public async Task<bool> DeleteCarAsync(int id)
@@ -60,5 +95,29 @@ namespace Cars.ApplicationService.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<CarIndexViewModel> DetailsAsync(int id)
+        {
+            var car = await _context.Cars
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (car == null)
+            {
+                return null;
+            }
+
+            var carViewModel = new CarIndexViewModel
+            {
+                Id = car.Id,
+                Brand = car.Brand,
+                Model = car.Model,
+                Year = car.Year,
+                EnginePower = car.EnginePower
+            };
+
+            return carViewModel;
+        }
+
     }
 }
