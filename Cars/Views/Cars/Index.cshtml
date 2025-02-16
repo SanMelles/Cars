@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Car List";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Kui kasutad layouti
+}
+
+<h1>Car List</h1>
+
+<table id="carTable">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Siin saab Razoriga dünaamiliselt autod lisada *@
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/script.js"></script>
+}

@@ -10,6 +10,11 @@ namespace Cars.Controllers
     {
         private readonly ICarServices _carService;
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public CarsController(ICarServices carService)
         {
             _carService = carService;
