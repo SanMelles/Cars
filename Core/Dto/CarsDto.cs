@@ -15,7 +15,7 @@ namespace Cars.Core.Dto
         [Required]
         public string Model { get; set; } = string.Empty;
         public int Year { get; set; }
-        public decimal? EnginePower { get; set; }
+        public int EnginePower { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
     }

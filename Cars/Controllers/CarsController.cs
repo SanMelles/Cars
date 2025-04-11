@@ -28,7 +28,8 @@ namespace Cars.Controllers
                     Id = x.Id,
                     Brand = x.Brand,
                     Model = x.Model,
-                    Year = x.Year
+                    Year = x.Year,
+                    EnginePower = x.EnginePower,
                 });
 
             return View(result);
@@ -44,11 +45,6 @@ namespace Cars.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CarCreateUpdateViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("CreateUpdate", vm);
-            }
-
             var dto = new CarDto()
             {
                 Id = vm.Id,
@@ -56,24 +52,28 @@ namespace Cars.Controllers
                 Model = vm.Model,
                 Year = vm.Year,
                 EnginePower = vm.EnginePower,
-                CreatedAt = vm.CreatedAt,
-                ModifiedAt = vm.ModifiedAt
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow
             };
 
-            var result = await _carService.AddCarAsync(dto);
+            var result = await _carService.Create(dto);
 
             if (result == null)
             {
-                return View(vm);
+                TempData["ErrorMessage"] = "Failed to create the car.";
+                return View("CreateUpdate", vm); // Jääb lehele, kui salvestamine ei õnnestu
             }
 
-            return RedirectToAction(nameof(Index));
+            TempData["SuccessMessage"] = "Car added successfully!";
+            return RedirectToAction(nameof(Index)); // Viib Cars lehele tagasi
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var car = await _carService.DetailsAsync(id);
+            var car = await _carService.Details(id);
 
             if (car == null)
             {
@@ -97,7 +97,7 @@ namespace Cars.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var car = await _carService.DetailsAsync(id);
+            var car = await _carService.Details(id);
 
             if (car == null)
             {
@@ -112,7 +112,7 @@ namespace Cars.Controllers
                 Year = car.Year,
                 EnginePower = car.EnginePower,
                 CreatedAt = car.CreatedAt,
-                ModifiedAt = car.ModifiedAt
+                ModifiedAt = DateTime.Now,
             };
 
             return View("CreateUpdate", vm);
@@ -137,7 +137,7 @@ namespace Cars.Controllers
                 ModifiedAt = vm.ModifiedAt
             };
 
-            var result = await _carService.UpdateCarAsync(dto);
+            var result = await _carService.Update(dto);
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Cars.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var car = await _carService.DetailsAsync(id);
+            var car = await _carService.Details(id);
 
             if (car == null)
             {
@@ -175,11 +175,11 @@ namespace Cars.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmation(int id)
         {
-            var car = await _carService.DeleteCarAsync(id);
+            bool isDeleted = await _carService.Delete(id);
 
-            if (car == null)
+            if (!isDeleted)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["ErrorMessage"] = "Failed to delete the car.";
             }
 
             return RedirectToAction(nameof(Index));

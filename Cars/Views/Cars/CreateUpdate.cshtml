@@ -1,5 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Cars.Core.Models.Cars
+@model CarCreateUpdateViewModel
+
+<h1>@(Model.Id == 0 ? "Create New Car" : "Update Car")</h1>
+
+<form asp-action="@(Model.Id == 0 ? "Create" : "Update")" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Brand" class="form-label">Brand</label>
+        <input asp-for="Brand" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Model" class="form-label">Model</label>
+        <input asp-for="Model" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label">Year</label>
+        <input asp-for="Year" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EnginePower" class="form-label">Engine Power (KW)</label>
+        <input asp-for="EnginePower" type="number" class="form-control" required />
+    </div>
+
+    @if (Model.Id != 0)
+    {
+        <div class="mb-3">
+            <label asp-for="CreatedAt" class="form-label">Created At</label>
+            <input asp-for="CreatedAt" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ModifiedAt" class="form-label">Modified At</label>
+            <input asp-for="ModifiedAt" class="form-control" readonly />
+        </div>
+    }
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

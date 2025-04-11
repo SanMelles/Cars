@@ -8,10 +8,9 @@ namespace Cars.Core.ServiceInterface
 {
     public interface ICarServices
     {
-        Task<IEnumerable<CarIndexViewModel>> GetAllCarsAsync();
-        Task<CarIndexViewModel> AddCarAsync(CarDto car);
-        Task<CarIndexViewModel> UpdateCarAsync(CarDto car);
-        Task<CarIndexViewModel> DetailsAsync(int id);
-        Task<bool> DeleteCarAsync(int id);
+        Task<Car> Create(CarDto car);
+        Task<Car> Update(CarDto car);
+        Task<Car> Details(int id);
+        Task<bool> Delete(int id);
     }   
 }

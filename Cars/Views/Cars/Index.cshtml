@@ -1,6 +1,10 @@
-﻿@model IEnumerable<Car>
+﻿@using Cars.Core.Models;
+@using Cars.Core.Models.Cars
+@model IEnumerable<Cars.Core.Models.Cars.CarIndexViewModel>
 
 <h1>Car List</h1>
+
+<a asp-action="Create" class="btn btn-success mb-3">Add New Car</a>
 
 <table class="table table-hover">
     <thead>
@@ -9,6 +13,8 @@
             <th>Brand</th>
             <th>Model</th>
             <th>Year</th>
+            <th>Engine Power</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +25,12 @@
                 <td>@car.Brand</td>
                 <td>@car.Model</td>
                 <td>@car.Year</td>
+                <td>@car.EnginePower KW</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Update" asp-route-id="@car.Id" class="btn btn-warning btn-sm">Update</a>
+                    <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

@@ -16,76 +16,49 @@ namespace Cars.ApplicationService.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<CarIndexViewModel>> GetAllCarsAsync()
+        public async Task<Car> Create(CarDto dto)
         {
-            return await _context.Cars.ToListAsync();
-        }
-
-        public async Task<CarIndexViewModel> GetCarByIdAsync(int id)
-        {
-            return await _context.Cars.FindAsync(id);
-        }
-
-        public async Task<CarIndexViewModel> AddCarAsync(CarDto dto)
-        {
-            var car = new CarIndexViewModel
+            Car car = new Car
             {
                 Id = dto.Id,
                 Brand = dto.Brand,
                 Model = dto.Model,
                 Year = dto.Year,
                 EnginePower = dto.EnginePower,
-                CreatedAt = dto.CreatedAt,
-                ModifiedAt = dto.ModifiedAt
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now
             };
 
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
 
-            var carViewModel = new CarIndexViewModel
-            {
-                Id = car.Id,
-                Brand = car.Brand,
-                Model = car.Model,
-                Year = car.Year,
-                EnginePower = car.EnginePower
-            };
-
-            return carViewModel;
+            return car;
         }
 
-        public async Task<CarIndexViewModel> UpdateCarAsync(CarDto dto)
+
+        public async Task<Car> Update(CarDto dto)
         {
-            var car = await _context.Cars.FindAsync(dto.Id);
-            if (car == null)
-            {
-                return null;
-            }
+            Car domain = new();
 
-            car.Brand = dto.Brand;
-            car.Model = dto.Model;
-            car.Year = dto.Year;
-            car.EnginePower = dto.EnginePower;
-            car.ModifiedAt = DateTime.UtcNow;
+            domain.Id = dto.Id;
+            domain.Brand = dto.Brand;
+            domain.Model = dto.Model;
+            domain.Year = dto.Year;
+            domain.EnginePower = dto.EnginePower;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.ModifiedAt = dto.ModifiedAt;
 
-            _context.Cars.Update(car);
+            _context.Cars.Update(domain);
             await _context.SaveChangesAsync();
 
-            var carViewModel = new CarIndexViewModel
-            {
-                Id = car.Id,
-                Brand = car.Brand,
-                Model = car.Model,
-                Year = car.Year,
-                EnginePower = car.EnginePower
-            };
-
-            return carViewModel;
+            return domain;
         }
 
-        public async Task<bool> DeleteCarAsync(int id)
+
+        public async Task<bool> Delete(int id)
         {
-            var car = await _context.Cars.FindAsync(id);
+            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+
             if (car == null)
             {
                 return false;
@@ -93,31 +66,24 @@ namespace Cars.ApplicationService.Services
 
             _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
+
             return true;
         }
 
-        public async Task<CarIndexViewModel> DetailsAsync(int id)
+
+        public async Task<Car> Details(int id)
         {
             var car = await _context.Cars
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+                                    .FirstOrDefaultAsync(x => x.Id == id);
 
             if (car == null)
             {
                 return null;
             }
 
-            var carViewModel = new CarIndexViewModel
-            {
-                Id = car.Id,
-                Brand = car.Brand,
-                Model = car.Model,
-                Year = car.Year,
-                EnginePower = car.EnginePower
-            };
-
-            return carViewModel;
+            return car;
         }
+
 
     }
 }
